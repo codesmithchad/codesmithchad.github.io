@@ -1,3 +1,13 @@
+---
+layout: post
+title: Toast message view 만들기
+subtitle: 바쁘다 바빠 현대 코딩, 이런거 만드느라 시간쓰지 말자
+# cover-img: /assets/img/path.jpg
+# thumbnail-img: /assets/img/thumb.png
+# share-img: /assets/img/path.jpg
+tags: [iOS, UI, Templete]
+---
+
 # ToastMessageView
 
 달갑진 않지만 안드로이드와 유사한 토스트 메세지 UI를 왕왕 요구받는다.
