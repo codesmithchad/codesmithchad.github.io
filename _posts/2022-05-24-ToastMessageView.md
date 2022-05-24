@@ -12,14 +12,14 @@ tags: [iOS, UI, Templete, Toast, notification]
 > 이 케이스를 빠르게 쳐내기 위해 템플릿을 만들기로 했다.
 
 
-
+&nbsp;
 # 기능
 * 네비게이션 영역에 독립적으로 동작한다. (vc를 팝한다고 같이 사라지지 않는다)
 * 모든 화면의 최상위에 존재한다.
 * 한번에 한개의 토스트 메세지만 표시한다.
 
 ---
-
+\n
 # 구현
 
 ![toast](/assets/img/toastMessageView.png){: .mx-auto.d-block :}
@@ -54,7 +54,7 @@ private var hideTimer: Timer? // 5
 
 ## 3. UI 셋업
 viewDidLoad나 init 시점에 호출하여 default UI를 구성한다.
-```
+~~~
 private func setupUI() {
     guard let keyWindow = UIApplication.topKeywindow.first else { return }
     keyWindow.addSubview(self) // 1
@@ -79,11 +79,11 @@ private func setupUI() {
     showAnchor.priority = .defaultLow
     showAnchor.isActive = true
 }
-```
+~~~
 1. 전역으로 표시되므로 키윈도에 얹기로 했다. 
-2. 컨스트레인트를 지정한다. 텍스트 양에 따라 높이를 가변하기 위해 greaterThan으로 지정한다. 토스트를 가릴때는 토스트의 탑이 키윈도의 바텀에 붙고 보일때는 토스트의 바텀이 키윈도의 세이프 바텀에 붙는다. 노치가 없는경우 바텀에 마진없이 붙게 되므로 여유공간을 주기위해 constant를 추가하였다.
+2. 컨스트레인트를 지정한다. 텍스트 양에 따라 높이를 가변하기 위해 greaterThan으로 지정한다. 토스트를 가릴때는 토스트의 탑이 키윈도의 바텀에 붙고 보일때는 토스트의 바텀이 키윈도의 세이프 바텀에 붙는다. 
 3. 토스트를 가릴때의 컨스트레인트 지정. priority를 high로 지정하여 우선권을 갖도록 한다.
-4. 토스트를 보일때의 컨스트레인트 지정. priority를 low로 지정하여 hideAnchor가 deactive 될 때 showAnchor가 active 되도록 한다.
+4. 토스트를 보일때의 컨스트레인트 지정. priority를 low로 지정하여 hideAnchor가 deactive 될 때 showAnchor가 active 되도록 한다. 노치가 없는경우 바텀에 마진없이 붙게 되므로 여유공간을 주기위해 constant를 추가하였다.
 
 
 ## 4. 토스트 토글 functions
