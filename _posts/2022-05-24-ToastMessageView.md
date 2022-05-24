@@ -18,8 +18,12 @@ tags: [iOS, UI, Templete, Toast, notification]
 * 모든 화면의 최상위에 존재한다.
 * 한번에 한개의 토스트 메세지만 표시한다.
 
+&nbsp;
+
 ---
-\n
+
+&nbsp;
+
 # 구현
 
 ![toast](/assets/img/toastMessageView.png){: .mx-auto.d-block :}
@@ -34,6 +38,7 @@ extension UIApplication {
 }
 ```
 
+&nbsp;
 
 ## 2. 필수 프로퍼티
 ```
@@ -51,10 +56,11 @@ private var hideTimer: Timer? // 5
 4. 이미 표시중인 토스트가 있다면 닫기 처리를 선행해야 위한 플래그
 5. 일정 시간이 지나면 토스트 숨김처리를 위한 타이머
 
+&nbsp;
 
 ## 3. UI 셋업
 viewDidLoad나 init 시점에 호출하여 default UI를 구성한다.
-~~~
+```
 private func setupUI() {
     guard let keyWindow = UIApplication.topKeywindow.first else { return }
     keyWindow.addSubview(self) // 1
@@ -79,12 +85,13 @@ private func setupUI() {
     showAnchor.priority = .defaultLow
     showAnchor.isActive = true
 }
-~~~
+```
 1. 전역으로 표시되므로 키윈도에 얹기로 했다. 
 2. 컨스트레인트를 지정한다. 텍스트 양에 따라 높이를 가변하기 위해 greaterThan으로 지정한다. 토스트를 가릴때는 토스트의 탑이 키윈도의 바텀에 붙고 보일때는 토스트의 바텀이 키윈도의 세이프 바텀에 붙는다. 
 3. 토스트를 가릴때의 컨스트레인트 지정. priority를 high로 지정하여 우선권을 갖도록 한다.
 4. 토스트를 보일때의 컨스트레인트 지정. priority를 low로 지정하여 hideAnchor가 deactive 될 때 showAnchor가 active 되도록 한다. 노치가 없는경우 바텀에 마진없이 붙게 되므로 여유공간을 주기위해 constant를 추가하였다.
 
+&nbsp;
 
 ## 4. 토스트 토글 functions
 에니메이션과 함께 토스트를 표시한다.
@@ -115,6 +122,7 @@ private func hideToast(_ completion: ((Bool) -> Void)? = nil) { // 3
 2. 탭, 슬라이드 다운 제스쳐의 selector가 호출할 수 있도록 objc 펑션을 추가한다. (컴플리션 클로저를 인자로 받게 하면 selector 호출시 bad access가 나서 아쉽지만 중복 생성)
 3. 토스트 가리기 펑션. 에니메이션과 함께 hideAnchor를 activate한다. 타이머도 종료한다. 가린 직후 다음 토스트를 띄워야 할 수 있으므로 클로저를 받아 컴플리션에 할당한다.
 
+&nbsp;
 
 ## 5. Timer function 추가
 표시할때 addTimer를 호출하여 타이머가 시작되도록 하고 숨길때 remove타이머를 호출하여 타이머가 종료되도록한다. 
@@ -129,6 +137,7 @@ private func removeTimer() {
 }
 ```
 
+&nbsp;
 
 ## 6. Gesture 추가
 토스트를 스와이프 다운을 하거나 탭했을 경우 닫기가 동작하도록 한다.
@@ -142,6 +151,7 @@ private func setupGesture() {
 }
 ```
 
+&nbsp;
 
 ## 7. 호출
 싱글턴으로 구성하였으므로 init없이 어디서나 호출이 가능하다.
@@ -149,7 +159,11 @@ private func setupGesture() {
 ToastMessageView.shared.showToastMessage("Hello toast!\nThis is a test toast message.")
 ```
 
+&nbsp;
+
 ---
+
+&nbsp;
 
 # 추가 기능
 Config 프로퍼티를 통해 속성변경이 가능하도록 한다.
@@ -179,6 +193,7 @@ if config == nil {
 ```
 * viewDidLoad시점에 config이 nil인 경우 기본값을 설정하도록 한다.
 
+&nbsp;
 
 ## usage
 ```
@@ -188,6 +203,8 @@ ToastMessageView.shared.showToastMessage("Hello toast!\nThis is a test toast mes
 * showToastMessage를 호출하기 전에 config을 할당한다.
 
 ---
+
+&nbsp;
 
 # 여제
 * closure 인자를 가진 objc function은 왜 selector에서 호출하면 bad access가 되는가
