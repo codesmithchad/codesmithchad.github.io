@@ -2,7 +2,7 @@
 layout: post
 title: Toast message view
 subtitle: 바쁘다 바빠 현대 코딩, 이런거 만드느라 시간쓰지 말자
-cover-img: /assets/img/toastMessageView.png
+# cover-img: /assets/img/toastMessageView.png
 # thumbnail-img: /assets/img/thumb.png
 # share-img: /assets/img/path.jpg
 tags: [iOS, UI, Templete, Toast, notification]
@@ -22,6 +22,7 @@ tags: [iOS, UI, Templete, Toast, notification]
 
 # 구현
 
+![toast](/assets/img/toastMessageView.png){: .mx-auto.d-block :}
 
 ## 1. 키윈도 익스텐션
 키윈도를 쉽게 얻기 위해 UIApplication extension에 keyWindow를 추가한다.
