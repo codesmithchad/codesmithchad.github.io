@@ -30,7 +30,7 @@ tags: [iOS, UI, Templete, Toast, notification]
 
 ## 1. 키윈도 익스텐션
 키윈도를 쉽게 얻기 위해 UIApplication extension에 keyWindow를 추가한다.
-```
+```swift
 extension UIApplication {
     static var topKeywindow: UIWindow? {
         UIApplication.shared.windows.filter({ $0.isKeyWindow }).first
@@ -41,7 +41,7 @@ extension UIApplication {
 &nbsp;
 
 ## 2. 필수 프로퍼티
-```
+```swift
 static let shared = ToastMessageView() // 1
 private let messageLabel = UILabel() // 2
 private var hideAnchor: NSLayoutConstraint? // 3
@@ -60,7 +60,7 @@ private var hideTimer: Timer? // 5
 
 ## 3. UI 셋업
 viewDidLoad나 init 시점에 호출하여 default UI를 구성한다.
-```
+```swift
 private func setupUI() {
     guard let keyWindow = UIApplication.topKeywindow.first else { return }
     keyWindow.addSubview(self) // 1
@@ -96,7 +96,7 @@ private func setupUI() {
 ## 4. 토스트 토글 functions
 에니메이션과 함께 토스트를 표시한다.
 표시되는 경우 약간의 바운스로 쫄깃함을 추가하고 가리는 경우는 바운스가 없도록 한다. (가리는 경우에도 바운스를 넣으면 찝찝한 UI를 볼 수 있다.)
-```
+```swift
 private func showToast(_ message: String?) { // 1
     messageLabel.text = message
     UIApplication.topKeywindow?.layoutIfNeeded()
@@ -126,7 +126,7 @@ private func hideToast(_ completion: ((Bool) -> Void)? = nil) { // 3
 
 ## 5. Timer function 추가
 표시할때 addTimer를 호출하여 타이머가 시작되도록 하고 숨길때 remove타이머를 호출하여 타이머가 종료되도록한다. 
-```
+```swift
 private func addTimer() {
     hideTimer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(hideToastSelector), userInfo: nil, repeats: false)
 }
@@ -142,7 +142,7 @@ private func removeTimer() {
 ## 6. Gesture 추가
 토스트를 스와이프 다운을 하거나 탭했을 경우 닫기가 동작하도록 한다.
 viewDidLoad나 init 시점에 UI 셋업 직후 호출하도록 한다.
-```
+```swift
 private func setupGesture() {
     let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(hideToastSelector))
     swipeDown.direction = .down
@@ -155,7 +155,7 @@ private func setupGesture() {
 
 ## 7. 호출
 싱글턴으로 구성하였으므로 init없이 어디서나 호출이 가능하다.
-```
+```swift
 ToastMessageView.shared.showToastMessage("Hello toast!\nThis is a test toast message.")
 ```
 
@@ -170,7 +170,7 @@ Config 프로퍼티를 통해 속성변경이 가능하도록 한다.
 
 
 ## define
-```
+```swift
 struct Config {
     var backgroundColor: UIColor = .black.withAlphaComponent(0.8)
     var maxLines: Int = 10
@@ -186,7 +186,7 @@ var config: Config? {
 
 * config 구조체 인스턴스를 만들고 didSet이 될 때 각 속성값을 할당하도록 한다.
 
-```
+```swift
 if config == nil {
     config = Config()
 }
@@ -196,11 +196,13 @@ if config == nil {
 &nbsp;
 
 ## usage
-```
+```swift
 ToastMessageView.shared.config = ToastMessageView.Config(backgroundColor: .blue, maxLines: 0)
 ToastMessageView.shared.showToastMessage("Hello toast!\nThis is a test toast message.")
 ```
 * showToastMessage를 호출하기 전에 config을 할당한다.
+
+&nbsp;
 
 ---
 
