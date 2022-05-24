@@ -1,11 +1,11 @@
 ---
 layout: post
-title: Toast message view 만들기
+title: Toast message view
 subtitle: 바쁘다 바빠 현대 코딩, 이런거 만드느라 시간쓰지 말자
-# cover-img: /assets/img/path.jpg
+cover-img: /assets/img/toastMessageView.png
 # thumbnail-img: /assets/img/thumb.png
 # share-img: /assets/img/path.jpg
-tags: [iOS, UI, Templete]
+tags: [iOS, UI, Templete, Toast, notification]
 ---
 
 > 달갑진 않지만 안드로이드와 유사한 토스트 메세지 UI를 왕왕 요구받는다.
@@ -150,8 +150,46 @@ ToastMessageView.shared.showToastMessage("Hello toast!\nThis is a test toast mes
 
 
 
+# 추가 기능
+Config 프로퍼티를 통해 속성변경이 가능하도록 한다.
+
+
+## define
+```
+struct Config {
+    var backgroundColor: UIColor = .black.withAlphaComponent(0.8)
+    var maxLines: Int = 10
+}
+var config: Config? {
+    didSet {
+        guard let config = self.config else { return }
+        backgroundColor = config.backgroundColor
+        messageLabel.numberOfLines = config.maxLines
+    }
+}
+```
+
+* config 구조체 인스턴스를 만들고 didSet이 될 때 각 속성값을 할당하도록 한다.
+
+```
+if config == nil {
+    config = Config()
+}
+```
+* viewDidLoad시점에 config이 nil인 경우 기본값을 설정하도록 한다.
+
+
+## usage
+```
+ToastMessageView.shared.config = ToastMessageView.Config(backgroundColor: .blue, maxLines: 0)
+ToastMessageView.shared.showToastMessage("Hello toast!\nThis is a test toast message.")
+```
+* showToastMessage를 호출하기 전에 config을 할당한다.
+
+
 # 여제
 * closure 인자를 가진 objc function은 왜 selector에서 호출하면 bad access가 되는가
 * 토스트 메세지를 누르면 닫기 이외의 추가적인 기능 (근데 굳이 토스트가 리치해질 필요가 있나??)
 * 여러개의 메세지를 연달아 표시해야 하는 케이스가 발생하는 경우는?
     * 표시속성(immediately, serially)을 지정하여 바로 보여주거나 기다린 후 보여주기?
+* config에 배경색이나 라인수 이외에 토스트와 레이블의 constraints, bottom margin, UILabel 속성, cornerRadius, animation 속성 등도 추가 필요
