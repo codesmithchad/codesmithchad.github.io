@@ -18,7 +18,7 @@ tags: [iOS, UI, Templete, Toast, notification]
 * 모든 화면의 최상위에 존재한다.
 * 한번에 한개의 토스트 메세지만 표시한다.
 
-
+---
 
 # 구현
 
@@ -149,7 +149,7 @@ private func setupGesture() {
 ToastMessageView.shared.showToastMessage("Hello toast!\nThis is a test toast message.")
 ```
 
-
+---
 
 # 추가 기능
 Config 프로퍼티를 통해 속성변경이 가능하도록 한다.
@@ -187,6 +187,7 @@ ToastMessageView.shared.showToastMessage("Hello toast!\nThis is a test toast mes
 ```
 * showToastMessage를 호출하기 전에 config을 할당한다.
 
+---
 
 # 여제
 * closure 인자를 가진 objc function은 왜 selector에서 호출하면 bad access가 되는가
