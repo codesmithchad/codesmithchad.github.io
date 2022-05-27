@@ -220,7 +220,7 @@ ToastMessageView.shared.showToastMessage("Hello toast!\nThis is a test toast mes
 
 &nbsp;
 
-# 여제
+# 남은 이슈
 * closure 인자를 가진 objc function은 왜 selector에서 호출하면 bad access가 되는가
 * 토스트 메세지를 누르면 닫기 이외의 추가적인 기능 (근데 굳이 토스트가 리치해질 필요가 있나??)
 * 여러개의 메세지를 연달아 표시해야 하는 케이스가 발생하는 경우는?
