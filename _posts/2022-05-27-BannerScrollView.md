@@ -25,7 +25,7 @@ tags: [iOS, UI, Templete, scroll, banner, 벤허]
 &nbsp;
 # 구현
 
-## 1 파일 생성
+## 1. 파일 생성
 * BannerScrollView.swift
     * 스크롤 배너 모듈을 구현할 파일
     * UIScrollView를 상속받고 UIScrollViewDelegate를 conform 한다
@@ -36,7 +36,7 @@ tags: [iOS, UI, Templete, scroll, banner, 벤허]
 
 &nbsp;
 
-## 2 배너 프로토콜
+## 2. 배너 프로토콜
 일관되지 않은 배너들을 담았다가 고생하고 싶지 않으므로 규격을 지정한다.
 ```swift
 protocol BannerViewable: UIView {
@@ -47,7 +47,7 @@ protocol BannerViewable: UIView {
 
 &nbsp;
 
-## 3 BannerScrollView의 property들
+## 3. BannerScrollView의 property들
 **BannerScrollView**
 ```swift
 private let stackView = UIStackView() // 1
@@ -60,7 +60,7 @@ private var bannerSize: CGSize = .zero // 3
 
 &nbsp;
 
-## 4 init시 배너뷰들과 배너뷰들의 사이즈를 할당한다
+## 4. init시 배너뷰들과 배너뷰들의 사이즈를 할당한다
 **BannerScrollView**
 ```swift
 init(frame: CGRect = .zero, banners: [BannerViewable], bannerSize: CGSize) {
@@ -73,7 +73,7 @@ init(frame: CGRect = .zero, banners: [BannerViewable], bannerSize: CGSize) {
 
 &nbsp;
 
-## 5 setup UI
+## 5. setup UI
 **BannerScrollView**
 ```swift
 private func setupUI() {
@@ -107,7 +107,7 @@ private func setupUI() {
 
 &nbsp;
 
-## 6 BannerViewable 을 따르는 SampleBannerView 생성
+## 6. BannerViewable 을 따르는 SampleBannerView 생성
 각 배너의 화면이 될 UIView
 **SampleBannerView**
 ```swift
@@ -126,7 +126,7 @@ init(frame: CGRect = .zero, tapClosure: (() -> Void)? = nil) { // 3
 
 &nbsp;
 
-## 7 UI setting과 action setting
+## 7. UI setting과 action setting
 **SampleBannerView**
 ```swift
 private func setupUI() {
@@ -154,7 +154,7 @@ private func setupUI() {
 
 &nbsp;
 
-## 8 샘플 배너 생성
+## 8. 샘플 배너 생성
 **BannerScrollExampleViewController**
 ```swift
 private var sampleBanners: [BannerViewable] {
@@ -175,7 +175,7 @@ private var sampleBanners: [BannerViewable] {
 
 &nbsp;
 
-## 9 BannerScrollExampleViewController의 ui 요소들을 설정
+## 9. BannerScrollExampleViewController의 ui 요소들을 설정
 **BannerScrollExampleViewController**
 ```swift
 private func setupUI() {
@@ -221,6 +221,6 @@ func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
 &nbsp;
 
 # 남은 이슈
-* 타이머로 일정 시간마다 자동으로 넘어가게 하는 옵션이 필요하다
-* 사용자가 배너를 건드렸다면 일정 시간 혹은 영원히 스크롤을 멈추고 싶다
+* 타이머로 일정 시간마다 자동으로 넘어가게 하는 옵션이 필요하다.
+* 사용자가 배너를 건드렸다면 일정 시간 혹은 영원히 스크롤을 멈추고 싶다.
 * 무한 스크롤 옵션이 필요할 수도 있다.
