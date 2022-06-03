@@ -21,9 +21,9 @@ tags: [iOS, test, tdd, xctest, unit test, ui test]
 
 ## 100% Code coverage should not be your goal
 
-100% 코드 커버리지가 목표가 되어서는 안된다.
-양질의 테스트를 작성하는것이 낫다.
-특히 테스트를 작성할 여유가 없는경우 100%에 도달하려 하지 않는것이 좋다.
+100% 코드 커버리지가 목표가 되어서는 안된다\
+양질의 테스트를 작성하는것이 낫다.\
+특히 테스트를 작성할 여유가 없는경우 100%에 도달하려 하지 않는것이 좋다.\
 시간을 아낀다는 점에서도 이득이라 느낄 것이다.
 
 &nbsp;
@@ -39,7 +39,7 @@ tags: [iOS, test, tdd, xctest, unit test, ui test]
 \
 당신의 코드는 오직 클래스 내에서만 호출되는 경우가 있고 이 경우 클래스 이니셜라이저에서 활성화 된다.\
 \
-아래의 앱이 포그라운드 혹은 백그라운드 진입시 트래커 시그널을 보내는 세션 모니터의 예제코드를 살펴보자.\
+아래의 앱이 포그라운드 혹은 백그라운드 진입시 트래커 시그널을 보내는 세션 모니터의 예제코드를 살펴보자.
 
 ```swift
 final class Tracker {
@@ -78,15 +78,16 @@ final class SessionMonitor {
 }
 ```
 
-이 경우 모든 로직들이 잘 분리되었고 최소한의 내용만 노출되도록 하였다.\
+모든 로직들이 잘 분리되었고 최소한의 내용만 노출되도록 하였다.\
 \
 willEnterForegroundNotification와 didEnterBackgroundNotification가 호출될 때 스타트 세션과 엔드 세션 메소드가 제대로 호출되는지 확인하고 싶다.\
 \
 이를 달성하기 위한 방법은 여러가지가 있다.\
-tracker와 hasActiveSession를 non private으로 변경하면 유닛 테스트가 읽는다.\
-이것은 동작하는데 문제가 없고 우리가 직면한 문제를 해결하는 가장 빠른 방법이지만 잘 나눠놓은 api로부터는 멀어지게 된다.\
+tracker와 hasActiveSession를 non private으로 변경하면 유닛 테스트가 접근할 수 있다.\
+이것으로는 동작시키는데 문제가 없고 우리가 직면한 문제를 해결하는 가장 빠른 방법이지만 잘 나눠놓은 api로부터는 멀어지게 된다.\
 이렇게 하는 대신 새로운 프로토콜을 소개하고 의존성 주입을 통해 동작하고 하겠다.
 
+&nbsp;
 
 ### Dependency injection as a solution to validating private code
 
@@ -195,20 +196,22 @@ final class SessionMonitorTests: XCTestCase {
 ```
 
 여기서 한 일:
-* 우선 hasActiveSession 프로퍼티를 읽을수 있게 하는 MockedTracker 인스턴츠를 생성하였다.
+* 우선 hasActiveSession 프로퍼티를 읽을수 있게 하는 MockedTracker 인스턴트를 생성하였다.
 * SessionMonitor 인스턴스는 디펜던시로 MockedTracker를 주입하여 생성하였다.\
 테스트가 끝나기 전까지 relaease 되지 않도록 클래스 변수에 인스턴스를 저장하였다.
 * validating이 끝나면 초기 hasActiveSession는 false로 설정된다.\
-기대하는 노티피케이션을 날릴 것이고 정확한 결과가 나오는지 확인할 것이다.
+노티피케이션을 날릴 것이고 정확한 결과가 나오는지 확인할 것이다.
 
 이제 퍼블릭으로 설정하지 않고도 프라이빗 속성인 SessionMoniter를 테스트할 수 있다.\
 이는 큰 발전이지만 우리의 모든 요구조건을 충족시키진 못한다.\
 여전히 Tracker 인스턴스를 테스트해야 하고 이 인스턴스가 정확하게 동작하는지 확인 필요하다.
 
+&nbsp;
+
 ## Exposing internal variables and methods as a final resort
 
 이 Tracker 인스턴스의 경우 private hasActiveSession 프로퍼디는 여전히 읽을 수 없는 상태이다.\
-앞서 선언해 두었던 MockedTracker는 SessionMonitor를 테스트하는데 사용되지만 실제 Tracker 클래스를 테스트할수는 없다.\
+앞서 선언해 두었던 MockedTracker는 SessionMonitor를 테스트하는데 사용되지만 실제 Tracker 클래스를 테스트할 수는 없다.\
 \
 이것을 가능하게 하기위해 import한 타겟에 @testable 속성을 부여함으로 가능하게 할 수 있다.
 
@@ -261,9 +264,11 @@ final class Tracker: SessionTracking {
 클래스 내부에서만 쓰기가 가능하도록 프로퍼티에 private(set)를 추가하였다.\
 이것은 클래스 외부에서 내부요소의 읽기 접근이 가능하도록 해서 테스트 코드를 쓰기에 충분하다.
 
+&nbsp;
+
 ## Conclusion
 
-마침내 모든 유즈 케이스가 테스트가 가능하게 되었다\
-이것으로 100% 코드 커버리지가 가능하게 되었지만 이것이 주 목표가 되어서는 안된다.\
-가능한한 많은 유즈케이스에 좋은 테스트 코드를 작성하도록 노력해보자.\
-의존성 주입이 목표를 이루는데 도움이 되지 않는다면 프로퍼티에 읽기 접근 권한을 부여할 수도 있다.
+마침내 모든 유즈 케이스의 테스트가 가능하게 되었다\
+이것으로 100% 코드 커버리지가 가능하게 되었지만 이것이 주요 목표가 되어서는 안된다.\
+가능한 한 많은 유즈케이스에 좋은 테스트 코드를 작성하도록 노력하자.\
+의존성 주입이 목표를 이루는데 도움이 되지 않는다면 프로퍼티에 읽기 접근 권한을 부여하는 방법도 있다.
