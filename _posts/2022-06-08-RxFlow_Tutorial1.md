@@ -30,8 +30,9 @@ enum AppStep: Step {
 &nbsp;
 
 ## 2 Add First Flow and Stepper
-이 앱의 첫번째 플로우를 추가한다.\
-RxFlow의 Flow를 상속하도록 하고 root 변수와 navigate() 함수를 추가한다.
+이 튜토리얼 앱의 첫번째 플로우이며 navigationController를 root presentable로 갖는다.\
+(Flow 타입은 `var root: Presentable`와 `func navigate(to step: Step) -> FlowContributors`가 required이다.)\
+SceneDelegate에서 첫번째 스테퍼로 사용될 AppStepper도 정의한다.
 
 ```swift
 // AppFlow.swift
@@ -55,12 +56,12 @@ final class AppFlow: Flow {
         }
     }
     
-    private func doesAppLaunched() -> FlowContributors { 
+    private func doesAppLaunched() -> FlowContributors { // 3
         let introFlow = IntroFlow()
         Flows.use(introFlow, when: .created) { [weak self] flowRoot in
             self?.rootViewController.pushViewController(flowRoot, animated: false)
         }
-        return .one(flowContributor: .contribute(withNextPresentable: introFlow, withNextStepper: OneStepper(withSingleStep: AppStep.appLaunched)))
+        return .one(flowContributor: .contribute(withNextPresentable: introFlow, withNextStepper: OneStepper(withSingleStep: AppStep.appLaunched))) // warning: 마지막 AppStep.appLaunched은 차후 진행할 스텝으로 변경되어야 한다.
     }
 }
 
@@ -68,20 +69,21 @@ final class AppStepper: Stepper {
     
     let steps = PublishRelay<Step>()
     
-    var initialStep: Step { // 3
+    var initialStep: Step { // 4
         AppStep.appLaunched
     }
 }
 
 ```
-1. 앱 실행 후 첫번째 스탭으로 UINavigationController을 presentable로 갖는 스텝을 생성한다. (네비게이션 컨트롤러를 사용할 것이므로 rootViewController는 UINavigationController)
-2. .appLaunched인 경우 doesAppLaunched()를 호출하여 FlowContributor 리턴하도록 한다. 리턴된 FlowContributor를 통해 해당 플로우로 navigate 된다.
-3. 첫 진입의 경우 트리거가 없으므로 initialStep으로 .appLaunched step을 진행하도록 지정한다.
+1. navigationController 기반으로 화면을 다루고 싶으므로 첫번째 플로우의 presentable은 navigationController로 구성한다.
+2. .appLaunched인 경우 doesAppLaunched()를 호출하여 FlowContributor 리턴하도록 한다. 리턴된 FlowContributor를 통해 해당 플로우로 navigate된다.
+3. doesAppLaunched()에서는 두번째 플로우인 IntroFlow를 진행하도록 FlowContributor를 정의한다.
+4. 첫 진입의 경우 트리거가 없으므로 initialStep으로 .appLaunched step을 진행하도록 지정한다. (SceneDelegate에서 coordinate를 정의할때 AppStepper를 인자로 넘겨 이 스텝으로 navigate 될 것이다.)
 
 &nbsp;
 
 ## 3 Add Second Flow
-앱 실행 후 두번째 스탭으로 첫 화면인 IntroViewController를 presentable로 갖는 스탭을 생성한다.
+두번째로 실행 될 플로우로 navigatoin controller의 첫 view controller로 들어가게 될 IntroViewController를 root presentable로 갖는다.
 ```swift
 // IntroFlow.swift
 
@@ -166,12 +168,13 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 }
 ```
 1. FlowCoordinator를 생성한다.
-2. AppFlow와 AppStepper를 생성하고 coordinate를 조합한다.
-3. AppFlow가 적용되도록 플로우를 실행하고 클로저로 presentable인 flowRoot를 전달받아 window의 rootViewController를 지정한다.
+2. AppFlow와 AppStepper를 인자로 coordinate를 조합한다.
+3. 생성한 `AppFlow`와 `AppStepper`를 인자로 `Flows.use`를 호출하고 완료 클로저에서 flowRoot(presentable)를 전달받아 window의 rootViewController로 지정한다.
+
 
 &nbsp;
 
-[to be continued...]()
+[to be continued...](https://codesmithchad.github.io/2022-06-08-RxFlow_Tutorial2/)
 
 
 &nbsp;
