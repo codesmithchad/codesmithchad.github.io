@@ -1,6 +1,6 @@
 ---
 layout: post
-title: RxFlow totorial for begginers 1
+title: RxFlow tutorial for begginers 1
 subtitle: RxFlow를 천천히 알아보자.
 # cover-img: /assets/img/toastMessageView.png
 # thumbnail-img: /assets/img/thumb.png
@@ -17,14 +17,13 @@ Official 튜토리얼이 너무 어려워서 한 스텝씩 진행할 수 있는 
 
 ## 1 Add Steps
 첫 단계로 먼저 스텝을 정의한다.\
-최초 구동시의 첫번째 스탭과 임의의 두번째 스텝, 이 두개만 추가하도록 하겠다.
+지금은 첫 화면 표시만를 목적으로 하므로 첫번째 스탭만 추가한다.
 
 ```swift
 // AppStep.swift
 
 enum AppStep: Step {
     case appLaunched
-    case testStep
 }
 ```
 
@@ -33,7 +32,6 @@ enum AppStep: Step {
 ## 2 Add First Flow and Stepper
 이 앱의 첫번째 플로우를 추가한다.\
 RxFlow의 Flow를 상속하도록 하고 root 변수와 navigate() 함수를 추가한다.
-
 
 ```swift
 // AppFlow.swift
@@ -54,8 +52,6 @@ final class AppFlow: Flow {
         switch step {
         case .appLaunched: // 2
             return doesAppLaunched()
-        default:
-            return .none
         }
     }
     
@@ -79,7 +75,7 @@ final class AppStepper: Stepper {
 
 ```
 1. 앱 실행 후 첫번째 스탭으로 UINavigationController을 presentable로 갖는 스텝을 생성한다. (네비게이션 컨트롤러를 사용할 것이므로 rootViewController는 UINavigationController)
-2. .appLaunched인 경우 doesAppLaunched()를 호출하여 FlowContributor 리턴하도록 한다.
+2. .appLaunched인 경우 doesAppLaunched()를 호출하여 FlowContributor 리턴하도록 한다. 리턴된 FlowContributor를 통해 해당 플로우로 navigate 된다.
 3. 첫 진입의 경우 트리거가 없으므로 initialStep으로 .appLaunched step을 진행하도록 지정한다.
 
 &nbsp;
@@ -97,18 +93,12 @@ final class IntroFlow: Flow {
     private let rootViewController = IntroViewController() // 1
     
     func navigate(to step: Step) -> FlowContributors { // 2
-        guard let step = step as? AppStep else { return .none }
-        switch step {
-        case .testStep:
-            return .none
-        default:
-            return .none
-        }
+        return .none
     }
 }
 ```
 1. IntroViewController를 presentable로 가질 것이므로 rootViewController로 지정한다.
-2. 아직 다음단계가 없는 상태로 navigate()는 .none 만 리턴하도록 한다.
+2. 아직 다음단계가 없는 상태로 navigate()는 .none만 리턴하도록 한다.
 
 &nbsp;
 
