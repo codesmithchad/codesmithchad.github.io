@@ -8,10 +8,10 @@ subtitle: RxFlow를 천천히 알아보자.
 tags: [iOS, pattern, coordinator]
 ---
 
-ref: [RxFlow](https://github.com/RxSwiftCommunity/RxFlow)\
+> ref: [RxFlow](https://github.com/RxSwiftCommunity/RxFlow)\
 Official 튜토리얼이 너무 어려워서 한 스텝씩 진행할 수 있는 가이드를 만들기로 한 나\
 간단한 Step과 Flow만 생성하여 첫 화면까지만 만들어본다.\
-[project source link](https://github.com/codesmithchad/gettingRxFlow/tree/first_flow)
+[source link](https://github.com/codesmithchad/gettingRxFlow/tree/first_flow)
 
 &nbsp;
 
