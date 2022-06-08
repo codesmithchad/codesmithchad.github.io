@@ -8,13 +8,16 @@ subtitle: RxFlow를 천천히 알아보자.
 tags: [iOS, pattern, coordinator]
 ---
 
-Official 튜토리얼이 너무 어려워서 한 스텝씩 진행할 수 있는 가이드를 만들기로 한 나
-간단한 Step과 Flow만 생성하여 첫 화면까지만 만들어본다.
+ref: [RxFlow](https://github.com/RxSwiftCommunity/RxFlow)\
+Official 튜토리얼이 너무 어려워서 한 스텝씩 진행할 수 있는 가이드를 만들기로 한 나\
+간단한 Step과 Flow만 생성하여 첫 화면까지만 만들어본다.\
 [project source link](https://github.com/codesmithchad/gettingRxFlow/tree/first_flow)
+
+&nbsp;
 
 ## 1 Add Steps
 첫 단계로 먼저 스텝을 정의한다.\
-최초 구동시 스탭과 임의 스텝 두개만 추가하도록 하겠다.
+최초 구동시의 첫번째 스탭과 임의의 두번째 스텝, 이 두개만 추가하도록 하겠다.
 
 ```swift
 // AppStep.swift
@@ -147,7 +150,7 @@ final class IntroViewController: UIViewController {
 
 &nbsp;
 
-## 5 Set Root Step
+## 5 Use First Flow
 SceneDelegate에 위에 정의한 플로우들이 적용되도록 구성한다.
 
 ```swift
@@ -175,3 +178,10 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 1. FlowCoordinator를 생성한다.
 2. AppFlow와 AppStepper를 생성하고 coordinate를 조합한다.
 3. AppFlow가 적용되도록 플로우를 실행하고 클로저로 presentable인 flowRoot를 전달받아 window의 rootViewController를 지정한다.
+
+&nbsp;
+
+[to be continued...]()
+
+
+&nbsp;
