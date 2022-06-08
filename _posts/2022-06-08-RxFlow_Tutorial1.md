@@ -169,7 +169,8 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 ```
 1. FlowCoordinator를 생성한다.
 2. AppFlow와 AppStepper를 인자로 coordinate를 조합한다.
-3. 생성한 `AppFlow`와 `AppStepper`를 인자로 `Flows.use`를 호출하고 완료 클로저에서 flowRoot(presentable)를 전달받아 window의 rootViewController로 지정한다.
+3. 생성한 `AppFlow`와 `AppStepper`를 인자로 `Flows.use`를 호출하여 지정한 step에 맞는 flow를 실행하도록 한다./
+또한 완료 클로저에서 flowRoot(presentable)를 전달받아 window의 rootViewController로 지정한다.
 
 
 &nbsp;
